@@ -1,0 +1,26 @@
+{
+  "name": "makhorin/php-abac",
+  "version": "0.1",
+  "description": "Simple php-abac library",
+  "license": "MIT",
+  "keywords": ["abac"],
+  "authors": [
+    {
+      "name": "Alex Makhorin",
+      "email": "despected@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "php-ffmpeg/php-ffmpeg": "^0.9.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Abac\\": "src/Abac",
+      "Tests\\Abac\\": "tests"
+    }
+  }
+}
