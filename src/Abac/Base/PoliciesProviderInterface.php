@@ -6,7 +6,7 @@ namespace Abac\Base;
  */
 interface PoliciesProviderInterface
 {
-    public function one();
+    public function one($name);
 
     public function all();
 }
