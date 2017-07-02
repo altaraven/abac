@@ -5,6 +5,9 @@ namespace Abac;
 use Abac\Base\AccessCheckerInterface;
 use Abac\Base\AttributesProviderInterface;
 use Abac\Base\PoliciesProviderInterface;
+use Abac\Configuration\Configuration;
+use Abac\Configuration\ConfigurationInterface;
+use Abac\Providers\JsonDirectoryPoliciesProvider;
 use Abac\Providers\JsonFileAttributesProvider;
 use Abac\Providers\JsonFilePoliciesProvider;
 use Abac\Verification\AccessChecker;
@@ -25,6 +28,10 @@ class Abac
      * @var AccessCheckerInterface
      */
     protected $accessChecker;
+    /**
+     * @var ConfigurationInterface
+     */
+    protected $configuration;
 
     /**
      * Abac constructor
@@ -32,22 +39,37 @@ class Abac
      * @param PoliciesProviderInterface $policiesProvider
      * @param AttributesProviderInterface $attributesProvider
      * @param AccessCheckerInterface $accessChecker
+     * @param array|ConfigurationInterface $configuration
+     *
+     * TODO: decide how to inject $configuration and assign it to objects
      */
-    public function __construct(
+    protected function __construct(
         PoliciesProviderInterface $policiesProvider,
         AttributesProviderInterface $attributesProvider,
-        AccessCheckerInterface $accessChecker
+        AccessCheckerInterface $accessChecker,
+        $configuration = []
     )
     {
         $this->policiesProvider = $policiesProvider;
         $this->attributesProvider = $attributesProvider;
         $this->accessChecker = $accessChecker;
+        $this->configuration = $configuration;
     }
 
-    public static function createWithBasicConfiguration()
+    /**
+     * @param array|ConfigurationInterface $configuration
+     * @return static
+     */
+    public static function createWithBasicConfiguration($configuration = [])
     {
+        if (!$configuration instanceof ConfigurationInterface) {
+            $configuration = new Configuration($configuration);
+        }
+
+        $policiesPath = $configuration->get('policies.directory');
+
         return new static(
-            new JsonFilePoliciesProvider(),
+            new JsonDirectoryPoliciesProvider($policiesPath),
             new JsonFileAttributesProvider(),
             new AccessChecker()
         );
