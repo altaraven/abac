@@ -1,0 +1,82 @@
+{
+  "attributes": {
+    "main_user": {
+      "type": "user",
+      "fields": {
+        "id": {
+          "name": "ID"
+        },
+        "isGuest": {
+          "name": "Is Guest"
+        },
+        "isRoot": {
+          "name": "Is Root"
+        },
+        "firstName": {
+          "name": "First name"
+        },
+        "lastName": {
+          "name": "Last name"
+        },
+        "isActive": {
+          "name": "Is Active"
+        },
+        "masterAdminSiteIds": {
+          "name": "Master Admin Site Ids"
+        },
+        "managerSiteIds": {
+          "name": "Manager Site Ids"
+        },
+        "roles": {
+          "name": "Roles"
+        },
+        "createdAt": {
+          "name": "Created At"
+        }
+      }
+    },
+    "audio": {
+      "type": "resource",
+      "fields": {
+        "id": {
+          "name": "ID"
+        },
+        "title": {
+          "name": "Title"
+        },
+        "original_name": {
+          "name": "Original name"
+        },
+        "path": {
+          "name": "Path"
+        },
+        "isActive": {
+          "name": "Is Active"
+        },
+        "websiteId": {
+          "name": "websiteId"
+        },
+        "created_at": {
+          "name": "Created at"
+        },
+        "updated_at": {
+          "name": "Updated at"
+        }
+      }
+    },
+    "environment": {
+      "env_type": {
+        "name": "Environment type",
+        "variable_name": "ENV_TYPE"
+      },
+      "sub_domain": {
+        "name": "Sub-domain",
+        "variable_name": "SUB_DOMAIN"
+      },
+      "unit_id": {
+        "name": "Business Unit ID",
+        "variable_name": "UNIT_ID"
+      }
+    }
+  }
+}
