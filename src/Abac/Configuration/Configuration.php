@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of Alchemy\BinaryDriver.
  *
  * (c) Alchemy <info@alchemy.fr>
