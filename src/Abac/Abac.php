@@ -51,6 +51,18 @@ class Abac
             'class' => '\App\Services\abac\src\manager\PolicyRuleManager',
             ],
      *
+     *     public static function instantiate($reference, $type = null)
+            {
+                if (is_array($reference)) {
+                $class = isset($reference['class']) ? $reference['class'] : $type;
+                unset($reference['class']);
+                //class_uses
+                return new $class($reference);
+                }
+
+                return false;
+            }
+     *
      */
     protected function __construct(
         PoliciesProviderInterface $policiesProvider,
