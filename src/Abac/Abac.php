@@ -9,7 +9,6 @@ use Abac\Configuration\Configuration;
 use Abac\Configuration\ConfigurationInterface;
 use Abac\Providers\JsonDirectoryPoliciesProvider;
 use Abac\Providers\JsonFileAttributesProvider;
-use Abac\Providers\JsonFilePoliciesProvider;
 use Abac\Verification\AccessChecker;
 
 class Abac
@@ -42,6 +41,16 @@ class Abac
      * @param array|ConfigurationInterface $configuration
      *
      * TODO: decide how to inject $configuration and assign it to objects
+     *     'attributeManager' => [
+                'class' => '\App\Services\abac\src\manager\AttributeManager',
+                'attributes' => [],
+                'getter_prefix' => 'get',
+                'getter_name_transformation_function' => 'ucfirst',
+                ],
+            'policyRuleManager' => [
+            'class' => '\App\Services\abac\src\manager\PolicyRuleManager',
+            ],
+     *
      */
     protected function __construct(
         PoliciesProviderInterface $policiesProvider,
@@ -79,11 +88,10 @@ class Abac
      * @param string $ruleName
      * @param object $user
      * @param object|null $resource
-     * @param array $options
      *
      * @return bool
      */
-    public function checkAccess($ruleName, $user, $resource = null, $options = [])
+    public function checkAccess($ruleName, $user, $resource = null/*, $options = []*/)
     {
         $rule = $this->policiesProvider->one($ruleName);
 
