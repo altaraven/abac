@@ -2,23 +2,15 @@
 
 namespace Abac\Providers;
 
+use Abac\Base\ConfigurableObject;
 use Abac\Base\PoliciesProviderInterface;
 
-class JsonDirectoryPoliciesProvider implements PoliciesProviderInterface
+class JsonDirectoryPoliciesProvider extends ConfigurableObject implements PoliciesProviderInterface
 {
     /**
      * @var string
      */
     protected $path;
-
-    /**
-     * JsonDirectoryPoliciesProvider constructor.
-     * @param string $path
-     */
-    public function __construct($path)
-    {
-        $this->path = $path;
-    }
 
     /**
      * @param string $name

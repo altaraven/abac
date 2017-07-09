@@ -2,8 +2,9 @@
 namespace Abac\Verification;
 
 use Abac\Base\AccessCheckerInterface;
+use Abac\Base\ConfigurableObject;
 
-class AccessChecker implements AccessCheckerInterface
+class AccessChecker extends ConfigurableObject implements AccessCheckerInterface
 {
     /**
      * @param $rule

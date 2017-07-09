@@ -64,7 +64,7 @@ class Abac
             }
      *
      */
-    protected function __construct(
+    public function __construct(
         PoliciesProviderInterface $policiesProvider,
         AttributesProviderInterface $attributesProvider,
         AccessCheckerInterface $accessChecker,
@@ -77,23 +77,36 @@ class Abac
         $this->configuration = $configuration;
     }
 
+//    /**
+//     * @param array|ConfigurationInterface $configuration
+//     * @return static
+//     */
+//    public static function createWithBasicConfiguration($configuration = [])
+//    {
+//        if (!$configuration instanceof ConfigurationInterface) {
+//            $configuration = new Configuration($configuration);
+//        }
+//
+//        $policiesPath = $configuration->get('policies.directory');
+//
+//        return new static(
+//            new JsonDirectoryPoliciesProvider($policiesPath),
+//            new JsonFileAttributesProvider(),
+//            new AccessChecker()
+//        );
+//    }
+
     /**
-     * @param array|ConfigurationInterface $configuration
-     * @return static
+     * @param array $config
      */
-    public static function createWithBasicConfiguration($configuration = [])
+    public function create($config = [])
     {
-        if (!$configuration instanceof ConfigurationInterface) {
-            $configuration = new Configuration($configuration);
-        }
 
-        $policiesPath = $configuration->get('policies.directory');
+    }
 
-        return new static(
-            new JsonDirectoryPoliciesProvider($policiesPath),
-            new JsonFileAttributesProvider(),
-            new AccessChecker()
-        );
+    protected function loadDefaultConfig()
+    {
+
     }
 
     /**
