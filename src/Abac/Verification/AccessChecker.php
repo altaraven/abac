@@ -1,11 +1,14 @@
 <?php
+
 namespace Abac\Verification;
 
 use Abac\Base\AccessCheckerInterface;
-use Abac\Base\ConfigurableObject;
+use Abac\Base\ConfigurableTrait;
 
-class AccessChecker extends ConfigurableObject implements AccessCheckerInterface
+class AccessChecker implements AccessCheckerInterface
 {
+    use ConfigurableTrait;
+
     /**
      * @param $rule
      * @param $user

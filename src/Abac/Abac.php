@@ -4,6 +4,7 @@ namespace Abac;
 
 use Abac\Base\AccessCheckerInterface;
 use Abac\Base\AttributesProviderInterface;
+use Abac\Base\ConfigurableTrait;
 use Abac\Base\PoliciesProviderInterface;
 use Abac\Configuration\Configuration;
 use Abac\Configuration\ConfigurationInterface;
@@ -13,6 +14,7 @@ use Abac\Verification\AccessChecker;
 
 class Abac
 {
+    use ConfigurableTrait;
     /**
      * @var PoliciesProviderInterface
      */
@@ -33,80 +35,46 @@ class Abac
     protected $configuration;
 
     /**
-     * Abac constructor
-     *
-     * @param PoliciesProviderInterface $policiesProvider
-     * @param AttributesProviderInterface $attributesProvider
-     * @param AccessCheckerInterface $accessChecker
-     * @param array|ConfigurationInterface $configuration
-     *
-     * TODO: decide how to inject $configuration and assign it to objects
-     *     'attributeManager' => [
-                'class' => '\App\Services\abac\src\manager\AttributeManager',
-                'attributes' => [],
-                'getter_prefix' => 'get',
-                'getter_name_transformation_function' => 'ucfirst',
-                ],
-            'policyRuleManager' => [
-            'class' => '\App\Services\abac\src\manager\PolicyRuleManager',
-            ],
-     *
-     *     public static function instantiate($reference, $type = null)
-            {
-                if (is_array($reference)) {
-                $class = isset($reference['class']) ? $reference['class'] : $type;
-                unset($reference['class']);
-                //class_uses
-                return new $class($reference);
-                }
-
-                return false;
-            }
-     *
+     * @param array $config
+     * @return static
      */
-    public function __construct(
-        PoliciesProviderInterface $policiesProvider,
-        AttributesProviderInterface $attributesProvider,
-        AccessCheckerInterface $accessChecker,
-        $configuration = []
-    )
+    public static function create($config = [])
     {
-        $this->policiesProvider = $policiesProvider;
-        $this->attributesProvider = $attributesProvider;
-        $this->accessChecker = $accessChecker;
-        $this->configuration = $configuration;
-    }
+        $merged = array_merge(static::loadDefaultConfig(), $config);
 
-//    /**
-//     * @param array|ConfigurationInterface $configuration
-//     * @return static
-//     */
-//    public static function createWithBasicConfiguration($configuration = [])
-//    {
-//        if (!$configuration instanceof ConfigurationInterface) {
-//            $configuration = new Configuration($configuration);
-//        }
-//
-//        $policiesPath = $configuration->get('policies.directory');
-//
-//        return new static(
-//            new JsonDirectoryPoliciesProvider($policiesPath),
-//            new JsonFileAttributesProvider(),
-//            new AccessChecker()
-//        );
-//    }
+        $configuredObjects = [];
+        foreach ($merged as $item => $config) {
+            $configuredObjects[] = static::instantiate($config);
+            $setter = 'set' . ucfirst($item);
+            //setters VS static functions
+        }
+
+        return new static($configuredObjects);
+    }
 
     /**
-     * @param array $config
+     * @param array $reference
+     * @param null|string $className
+     * @return bool
      */
-    public function create($config = [])
+    public static function instantiate($reference, $className = null)
     {
+        if (is_array($reference)) {
+            $class = isset($reference['class']) ? $reference['class'] : $className;
+            unset($reference['class']);
+            //class_uses
+            return new $class($reference);
+        }
 
+        return false;
     }
 
-    protected function loadDefaultConfig()
+    /**
+     * @return array
+     */
+    protected static function loadDefaultConfig()
     {
-
+        return require(__DIR__ . '/../../config/default.configuration.php');
     }
 
     /**

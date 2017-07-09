@@ -2,11 +2,12 @@
 
 namespace Abac\Providers;
 
-use Abac\Base\ConfigurableObject;
+use Abac\Base\ConfigurableTrait;
 use Abac\Base\PoliciesProviderInterface;
 
-class JsonDirectoryPoliciesProvider extends ConfigurableObject implements PoliciesProviderInterface
+class JsonDirectoryPoliciesProvider implements PoliciesProviderInterface
 {
+    use ConfigurableTrait;
     /**
      * @var string
      */

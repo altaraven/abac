@@ -3,10 +3,11 @@
 namespace Abac\Providers;
 
 use Abac\Base\AttributesProviderInterface;
-use Abac\Base\ConfigurableObject;
+use Abac\Base\ConfigurableTrait;
 
-class JsonFileAttributesProvider extends ConfigurableObject implements AttributesProviderInterface
+class JsonFileAttributesProvider implements AttributesProviderInterface
 {
+    use ConfigurableTrait;
     /**
      * @var string
      */
