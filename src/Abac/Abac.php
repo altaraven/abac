@@ -24,8 +24,6 @@ class Abac
      */
     protected $accessChecker;
 
-    const DEFAULT_CONFIG_PATH = '/../../config/default.configuration.php';
-
     /**
      * Abac constructor.
      *
@@ -112,7 +110,7 @@ class Abac
      */
     protected static function loadDefaultConfig()
     {
-        return require __DIR__ . static::DEFAULT_CONFIG_PATH;
+        return require __DIR__ . Configuration::DEFAULT_CONFIG_PATH;
     }
 
     /**

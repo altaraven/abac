@@ -10,6 +10,7 @@ class Configuration extends \ArrayObject
     const POLICIES_PROVIDER = 'policiesProvider';
     const ATTRIBUTES_PROVIDER = 'attributesProvider';
     const ACCESS_CHECKER = 'accessChecker';
+    const DEFAULT_CONFIG_PATH = '/../../config/default.configuration.php';
 
     /**
      * Shortcut for parent method
