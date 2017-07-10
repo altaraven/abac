@@ -3,9 +3,16 @@
 return [
     'policiesProvider' => [
         'class' => '\Abac\Providers\JsonDirectoryPoliciesProvider',
+        'path' => 'lalal_1',
     ],
-    '$attributesProvider' => [],
-    '$accessChecker' => [],
+    'attributesProvider' => [
+        'class' => '\Abac\Providers\JsonFileAttributesProvider',
+        'path' => 'lalal_2',
+    ],
+    'accessChecker' => [
+        'class' => '\Abac\Verification\AccessChecker',
+        'test' => 'testing...',
+    ],
 
 //    'policiesPathAlias' => app_path('Services') . '/abac/config/policies/',
 //    'configPaths' => [

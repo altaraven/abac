@@ -9,15 +9,17 @@ class AccessChecker implements AccessCheckerInterface
 {
     use ConfigurableTrait;
 
+    protected $test;
+
     /**
      * @param $rule
      * @param $user
      * @param null $resource
+     *
      * @return bool
      */
     public function check($rule, $user, $resource = null)
     {
-
         return true;
     }
 }
