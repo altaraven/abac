@@ -6,8 +6,6 @@ use Abac\Base\AccessCheckerInterface;
 use Abac\Base\AttributesProviderInterface;
 use Abac\Base\PoliciesProviderInterface;
 use Abac\Configuration\Configuration;
-use Abac\Configuration\ConfigurationInterface;
-use Abac\Verification\AccessChecker;
 
 class Abac
 {
@@ -27,11 +25,6 @@ class Abac
     protected $accessChecker;
 
     const DEFAULT_CONFIG_PATH = '/../../config/default.configuration.php';
-
-//    /**
-//     * @var ConfigurationInterface
-//     */
-//    protected $configuration;
 
     /**
      * Abac constructor.
@@ -73,26 +66,27 @@ class Abac
     public static function create($config = [], $ignoreDefaultConfig = false)
     {
         $merged = (true === $ignoreDefaultConfig) ? $config : array_merge(static::loadDefaultConfig(), $config);
-        static::configureObjects($merged);
+        $objectsCollection = static::configureObjects($merged);
 
-        /**
-         * TODO: think about how to validate $merged array so the keys exist (maybe with Configuration class)
-         */
         return new static(
-            $merged['policiesProvider'],
-            $merged['attributesProvider'],
-            $merged['accessChecker']
+            $objectsCollection->get(Configuration::POLICIES_PROVIDER),
+            $objectsCollection->get(Configuration::ATTRIBUTES_PROVIDER),
+            $objectsCollection->get(Configuration::ACCESS_CHECKER)
         );
     }
 
     /**
      * @param array $merged
+     *
+     * @return Configuration
      */
-    protected static function configureObjects(&$merged)
+    protected static function configureObjects($merged)
     {
         foreach ($merged as $itemName => $config) {
             $merged[$itemName] = static::instantiate($config);
         }
+
+        return new Configuration($merged);
     }
 
     /**
