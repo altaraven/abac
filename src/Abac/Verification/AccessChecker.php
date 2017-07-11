@@ -5,6 +5,9 @@ namespace Abac\Verification;
 use Abac\Base\AccessCheckerInterface;
 use Abac\Base\ConfigurableTrait;
 
+/**
+ * Class AccessChecker
+ */
 class AccessChecker implements AccessCheckerInterface
 {
     use ConfigurableTrait;
@@ -12,14 +15,19 @@ class AccessChecker implements AccessCheckerInterface
     protected $test;
 
     /**
-     * @param $rule
-     * @param $user
-     * @param null $resource
+     * @param array       $ruleItems
+     * @param object      $user
+     * @param object|null $resource
      *
      * @return bool
      */
-    public function check($rule, $user, $resource = null)
+    public function check($ruleItems, $user, $resource = null)
     {
-        return true;
+        foreach ($ruleItems as $item) {
+            foreach ($item['attributes'] as $attribute) {
+                
+            }
+        }
+//        return true;
     }
 }
