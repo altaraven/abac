@@ -95,7 +95,7 @@ class Configuration extends \ArrayObject
      */
     public function get($key)
     {
-        return $this->offsetGet($key);
+        return parent::offsetGet($key);
     }
 
     /**
@@ -106,6 +106,6 @@ class Configuration extends \ArrayObject
      */
     public function set($key, $value)
     {
-        $this->offsetSet($key, $value);
+        parent::offsetSet($key, $value);
     }
 }
