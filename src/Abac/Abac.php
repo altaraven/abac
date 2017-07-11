@@ -55,6 +55,12 @@ class Abac
         return $this->accessChecker->check($rule, $user, $resource);
     }
 
+    public function _test()
+    {
+        $rules = $this->policiesProvider->one('audio.destroy');
+        dump($rules); die;
+    }
+
     /**
      * @param array $config
      *

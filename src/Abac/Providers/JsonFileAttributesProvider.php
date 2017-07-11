@@ -4,7 +4,12 @@ namespace Abac\Providers;
 
 use Abac\Base\AttributesProviderInterface;
 use Abac\Base\ConfigurableTrait;
+use Abac\Base\Helper;
 
+/**
+ * Class JsonFileAttributesProvider
+ * @package Abac\Providers
+ */
 class JsonFileAttributesProvider implements AttributesProviderInterface
 {
     use ConfigurableTrait;
@@ -13,21 +18,11 @@ class JsonFileAttributesProvider implements AttributesProviderInterface
      */
     protected $path;
 
-    public function release()
-    {
-
-    }
-
     /**
      * @return array
      */
-    protected function resolveFromPath()
+    public function release()
     {
-        $resourceLocation = 'file://' . realpath($this->path);
-//        $schema = (object) ['$ref' => $resourceLocation];
-        return ['$ref' => $resourceLocation];
-
-//        return json_encode($schema);
-
+        return Helper::jsonFileToArray($this->path);
     }
 }

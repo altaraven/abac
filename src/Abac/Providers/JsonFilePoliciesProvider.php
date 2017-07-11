@@ -3,40 +3,35 @@
 namespace Abac\Providers;
 
 use Abac\Base\ConfigurableTrait;
+use Abac\Base\Helper;
 use Abac\Base\PoliciesProviderInterface;
 
+/**
+ * Class JsonFilePoliciesProvider
+ */
 class JsonFilePoliciesProvider implements PoliciesProviderInterface
 {
     use ConfigurableTrait;
-
-    public function __construct()
-    {
-
-    }
+    /**
+     * @var string
+     */
+    protected $path;
 
     /**
      * @param string $name
+     *
+     * @return array
      */
     public function one($name)
     {
-
-    }
-
-    public function all()
-    {
-
+        return $this->all()[$name];
     }
 
     /**
      * @return array
      */
-    protected function resolveFromPath()
+    public function all()
     {
-        $resourceLocation = 'file://' . realpath($this->path);
-//        $schema = (object) ['$ref' => $resourceLocation];
-        return ['$ref' => $resourceLocation];
-
-//        return json_encode($schema);
-
+        return Helper::jsonFileToArray($this->path);
     }
 }

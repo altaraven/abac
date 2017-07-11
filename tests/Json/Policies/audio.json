@@ -1,298 +1,296 @@
 {
-  "rules": {
-    "audio.create": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.managerSiteIds"
-          }
+  "audio.create": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
         }
       }
-    ],
-    "audio.index": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.managerSiteIds"
-          }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
         }
       }
-    ],
-    "audio.show": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.managerSiteIds"
-          }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.managerSiteIds"
         }
       }
-    ],
-    "audio.update": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.managerSiteIds"
-          }
+    }
+  ],
+  "audio.index": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
         }
       }
-    ],
-    "audio.destroy": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
         }
       }
-    ],
-    "audio.attach.hash.tag": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.managerSiteIds"
-          }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.managerSiteIds"
         }
       }
-    ],
-    "audio.detach.hash.tag": [
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "main_user.isRoot": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.masterAdminSiteIds"
-          }
-        }
-      },
-      {
-        "attributes": {
-          "main_user.isActive": {
-            "comparison_type": "boolean",
-            "comparison": "boolAnd",
-            "value": true
-          },
-          "audio.websiteId": {
-            "comparison_type": "user",
-            "comparison": "isIn",
-            "value": "main_user.managerSiteIds"
-          }
+    }
+  ],
+  "audio.show": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
         }
       }
-    ]
-  }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.managerSiteIds"
+        }
+      }
+    }
+  ],
+  "audio.update": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.managerSiteIds"
+        }
+      }
+    }
+  ],
+  "audio.destroy": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
+        }
+      }
+    }
+  ],
+  "audio.attach.hash.tag": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.managerSiteIds"
+        }
+      }
+    }
+  ],
+  "audio.detach.hash.tag": [
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "main_user.isRoot": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.masterAdminSiteIds"
+        }
+      }
+    },
+    {
+      "attributes": {
+        "main_user.isActive": {
+          "comparison_type": "boolean",
+          "comparison": "boolAnd",
+          "value": true
+        },
+        "audio.websiteId": {
+          "comparison_type": "user",
+          "comparison": "isIn",
+          "value": "main_user.managerSiteIds"
+        }
+      }
+    }
+  ]
 }

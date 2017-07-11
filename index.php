@@ -2,6 +2,9 @@
 
 require(__DIR__ . '/vendor/autoload.php');
 
+/**
+ * @var \Abac\Abac $abac
+ */
 $abac = \Abac\Abac::create([
     'policiesProvider' => [
         'path' => __DIR__ . '/tests/Json/Policies',
@@ -13,4 +16,5 @@ $abac = \Abac\Abac::create([
         'test' => 'testing...',
     ],
 ]);
-dump($abac);
+//dump($abac);
+$abac->_test();
