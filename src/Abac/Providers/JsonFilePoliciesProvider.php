@@ -26,4 +26,17 @@ class JsonFilePoliciesProvider implements PoliciesProviderInterface
     {
 
     }
+
+    /**
+     * @return array
+     */
+    protected function resolveFromPath()
+    {
+        $resourceLocation = 'file://' . realpath($this->path);
+//        $schema = (object) ['$ref' => $resourceLocation];
+        return ['$ref' => $resourceLocation];
+
+//        return json_encode($schema);
+
+    }
 }

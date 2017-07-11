@@ -27,16 +27,47 @@ class JsonDirectoryPoliciesProvider implements PoliciesProviderInterface
         return $this->resolveFromPath();
     }
 
-    /**
-     * @return array
-     */
-    protected function resolveFromPath()
+    public function initEnterprisePolicies(Enterprise $enterprise, $environment = 'prod')
     {
-        $resourceLocation = 'file://' . realpath($this->path);
-//        $schema = (object) ['$ref' => $resourceLocation];
-        return ['$ref' => $resourceLocation];
+//        $enterprise->unsetConnection();
+//        $db = $enterprise->getConnection($environment);
+
+        $files = static::scandir($this->path);
+        $sources = [];
+
+        foreach ($files as $file) {
+            $fileContents = static::resolveJsonFromPath($this->path . $file);
+            $sources += isset($fileContents['rules']) ? $fileContents['rules'] : $fileContents;
+        }
+
+        $rows = [];
+        foreach ($sources as $action => $rule) {
+
+            $rows[] = [
+                'action' => $action,
+                'action_label' => $this->actionToLabel($action),
+                'rule' => Json::encode($rule),
+            ];
+        }
+    }
+
+    public static function resolveJsonFromPath($path)
+    {
+        $resourceLocation = 'file://' . realpath($path);
+        $schema = (object) ['$ref' => $resourceLocation];
 
 //        return json_encode($schema);
+        return $schema;
+    }
 
+    /**
+     * Scans directory and returns a pretty array of its files
+     *
+     * @param string $path
+     * @return array
+     */
+    public static function scandir($path)
+    {
+        return array_values(array_diff(scandir($path), ['..', '.']));
     }
 }
