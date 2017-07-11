@@ -57,60 +57,18 @@ class Abac
 
     /**
      * @param array $config
-     * @param bool  $ignoreDefaultConfig
      *
      * @return object
      */
-    public static function create($config = [], $ignoreDefaultConfig = false)
+    public static function create($config = []/*, $ignoreDefaultConfig = false*/)
     {
-        $merged = (true === $ignoreDefaultConfig) ? $config : array_merge(static::loadDefaultConfig(), $config);
-        $objectsCollection = static::configureObjects($merged);
+        $configuration = Configuration::init($config);
 
         return new static(
-            $objectsCollection->get(Configuration::POLICIES_PROVIDER),
-            $objectsCollection->get(Configuration::ATTRIBUTES_PROVIDER),
-            $objectsCollection->get(Configuration::ACCESS_CHECKER)
+            $configuration->get(Configuration::POLICIES_PROVIDER),
+            $configuration->get(Configuration::ATTRIBUTES_PROVIDER),
+            $configuration->get(Configuration::ACCESS_CHECKER)
         );
-    }
-
-    /**
-     * @param array $merged
-     *
-     * @return Configuration
-     */
-    protected static function configureObjects($merged)
-    {
-        foreach ($merged as $itemName => $config) {
-            $merged[$itemName] = static::instantiate($config);
-        }
-
-        return new Configuration($merged);
-    }
-
-    /**
-     * @param array       $reference
-     * @param null|string $className
-     *
-     * @return bool
-     */
-    public static function instantiate($reference, $className = null)
-    {
-        if (is_array($reference)) {
-            $class = isset($reference['class']) ? $reference['class'] : $className;
-            unset($reference['class']);
-            //class_uses
-            return new $class($reference);
-        }
-
-        return false;
-    }
-
-    /**
-     * @return array
-     */
-    protected static function loadDefaultConfig()
-    {
-        return require __DIR__ . Configuration::DEFAULT_CONFIG_PATH;
     }
 
     /**
