@@ -50,15 +50,19 @@ class Abac
      */
     public function checkAccess($ruleName, $user, $resource = null/*, $options = []*/)
     {
-        $rule = $this->policiesProvider->one($ruleName);
+        $ruleItems = $this->policiesProvider->one($ruleName);
 
-        return $this->accessChecker->check($rule, $user, $resource);
+        return $this->accessChecker
+            ->setUser($user)
+            ->setResource($resource)
+            ->check($ruleItems);
     }
 
     public function _test()
     {
         $rules = $this->policiesProvider->one('audio.destroy');
-        dump($rules); die;
+        dump($rules);
+        die;
     }
 
     /**

@@ -1,10 +1,28 @@
 <?php
 
 namespace Abac\Base;
+
 /**
- * Interface AttributesProviderInterface
+ * Interface AccessCheckerInterface
  */
 interface AccessCheckerInterface
 {
-    public function check($rule, $user, $resource = null);
+    /**
+     * @param array $ruleItems
+     *
+     * @return bool
+     */
+    public function check($ruleItems);
+
+    /**
+     * @param $user
+     * @return $this
+     */
+    public function setUser($user);
+
+    /**
+     * @param $resource
+     * @return $this
+     */
+    public function setResource($resource);
 }

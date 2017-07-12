@@ -10,24 +10,88 @@ use Abac\Base\ConfigurableTrait;
  */
 class AccessChecker implements AccessCheckerInterface
 {
-    use ConfigurableTrait;
+    //    use ConfigurableTrait;
 
-    protected $test;
+    protected $user;
+
+    protected $resource;
 
     /**
-     * @param array       $ruleItems
-     * @param object      $user
-     * @param object|null $resource
+     * {@inheritdoc}
+     */
+    public function check($ruleItems)
+    {
+        foreach ($ruleItems as $item) {
+            if (true === $this->verifyRuleItem($item)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $item
      *
      * @return bool
      */
-    public function check($ruleItems, $user, $resource = null)
+    public function verifyRuleItem($item)
     {
-        foreach ($ruleItems as $item) {
-            foreach ($item['attributes'] as $attribute) {
-                
-            }
+        $count = count($item);
+        $okCount = 0;
+
+        foreach ($item as $attribute) {
+            $okCount += (int) $this->verifyAttribute($attribute);
         }
-//        return true;
+
+        if ($okCount === $count) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $attribute
+     *
+     * @return bool
+     */
+    public function verifyAttribute($attribute)
+    {
+        $comparison = $this->getComparison($attribute['comparison_type']);
+
+
+
+        return $comparison->compare();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function getComparison($name)
+    {
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setResource($resource)
+    {
+        $this->resource = $resource;
+
+        return $this;
     }
 }
