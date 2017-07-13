@@ -99,8 +99,17 @@ class AccessChecker implements AccessCheckerInterface
     {
         if (!isset($this->assertions[$name])) {
             $message = \sprintf(
-                'Assertion type "%s" does not have appropriate class.',
+                'Assertion type "%s" is not assigned to any assertion php class.',
                 $name
+            );
+
+            throw new InvalidConfigurationException($message);
+        }
+
+        if (!class_exists($this->assertions[$name])) {
+            $message = \sprintf(
+                'Assertion class "%s" does not exist.',
+                $this->assertions[$name]
             );
 
             throw new InvalidConfigurationException($message);
