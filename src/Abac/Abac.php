@@ -6,6 +6,7 @@ use Abac\Base\AccessCheckerInterface;
 use Abac\Base\AttributesProviderInterface;
 use Abac\Base\PoliciesProviderInterface;
 use Abac\Configuration\Configuration;
+use Assert\Assert;
 
 class Abac
 {
@@ -60,6 +61,12 @@ class Abac
 
     public function _test()
     {
+        Assert::lazy()
+            ->that(10, 'foo')->string()
+            ->that(null, 'bar')->notEmpty()
+            ->that('string', 'baz')->isArray()
+            ->verifyNow();
+
         $rules = $this->policiesProvider->one('audio.destroy');
         dump($rules);
         die;
