@@ -4,17 +4,20 @@ namespace Abac\Verification;
 
 use Abac\Base\AccessCheckerInterface;
 use Abac\Base\ConfigurableTrait;
+use Abac\Exceptions\InvalidConfigurationException;
 
 /**
  * Class AccessChecker
  */
 class AccessChecker implements AccessCheckerInterface
 {
-    //    use ConfigurableTrait;
+    use ConfigurableTrait;
 
     protected $user;
 
     protected $resource;
+
+    protected $assertions;
 
     /**
      * {@inheritdoc}
@@ -40,8 +43,8 @@ class AccessChecker implements AccessCheckerInterface
         $count = count($item);
         $okCount = 0;
 
-        foreach ($item as $attribute) {
-            $okCount += (int) $this->verifyAttribute($attribute);
+        foreach ($item as $attribute => $assertion) {
+            $okCount += (int) $this->verifyAttribute($attribute, $assertion);
         }
 
         if ($okCount === $count) {
@@ -52,17 +55,39 @@ class AccessChecker implements AccessCheckerInterface
     }
 
     /**
-     * @param array $attribute
+     * @param string $attributeAlias
+     * @param array  $assertion
      *
      * @return bool
      */
-    public function verifyAttribute($attribute)
+    public function verifyAttribute($attributeAlias, $assertion)
     {
-        $comparison = $this->getComparison($attribute['comparison_type']);
+        $assertionClass = $this->getAssertionClass($assertion['assertion_type']);
+        $assertionMethod = $this->getAssertionMethod($assertionClass, $assertion['assertion']);
 
+        //TODO: receive attribute value from User
+        //TODO: receive attribute value from Resource
+        $params = [
+            $this->retrieveUserOrResourceValue($attributeAlias),
+        ];
 
+        //expected value goes as 2nd argument
+        if (isset($assertion['value'])) {
+            $params[] = $assertion['value'];
+        }
 
-        return $comparison->compare();
+        return call_user_func_array([$assertionClass, $assertionMethod], $params);
+    }
+
+    /**
+     * @param string $attributeAlias
+     *
+     * @return mixed
+     */
+    public function retrieveUserOrResourceValue($attributeAlias)
+    {
+        //TODO: implement
+        return '';
     }
 
     /**
@@ -70,9 +95,39 @@ class AccessChecker implements AccessCheckerInterface
      *
      * @return bool
      */
-    public function getComparison($name)
+    protected function getAssertionClass($name)
     {
+        if (!isset($this->assertions[$name])) {
+            $message = \sprintf(
+                'Assertion type "%s" does not have appropriate class.',
+                $name
+            );
 
+            throw new InvalidConfigurationException($message);
+        }
+
+        return $this->assertions[$name];
+    }
+
+    /**
+     * @param string $className
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function getAssertionMethod($className, $name)
+    {
+        if (!method_exists($className, $name)) {
+            $message = \sprintf(
+                'Assertion class "%s" does not have method "%s" .',
+                $className,
+                $name
+            );
+
+            throw new InvalidConfigurationException($message);
+        }
+
+        return $name;
     }
 
     /**

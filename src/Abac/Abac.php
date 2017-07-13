@@ -7,6 +7,7 @@ use Abac\Base\AttributesProviderInterface;
 use Abac\Base\PoliciesProviderInterface;
 use Abac\Configuration\Configuration;
 use Assert\Assert;
+use Assert\Assertion;
 
 class Abac
 {
@@ -61,13 +62,16 @@ class Abac
 
     public function _test()
     {
-        Assert::lazy()
-            ->that(10, 'foo')->string()
-            ->that(null, 'bar')->notEmpty()
-            ->that('string', 'baz')->isArray()
-            ->verifyNow();
+//        Assert::that('')->eq('')->integer();
+//        Assertion::alnum( '');
+//
+//        Assert::lazy()
+//            ->that(10, 'foo')->string()
+//            ->that(null, 'bar')->notEmpty()
+//            ->that('string', 'baz')->isArray()
+//            ->verifyNow();
 
-        $rules = $this->policiesProvider->one('audio.destroy');
+        $rules = $this->policiesProvider->one('audio.create');
         dump($rules);
         die;
     }

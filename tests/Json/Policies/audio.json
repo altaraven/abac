@@ -1,25 +1,20 @@
 {
   "audio.create": [
     {
-      "attributes": {
-        "main_user.isActive": {
-          "comparison_type": "boolean",
-          "comparison": "boolAnd",
-          "value": true
-        },
-        "main_user.isRoot": {
-          "comparison_type": "boolean",
-          "comparison": "boolAnd",
-          "value": true
-        }
+      "main_user.isActive": {
+        "assertion_type": "comparison",
+        "assertion": "true"
+      },
+      "main_user.isRoot": {
+        "assertion_type": "comparison",
+        "assertion": "true"
       }
     },
     {
       "attributes": {
         "main_user.isActive": {
-          "comparison_type": "boolean",
-          "comparison": "boolAnd",
-          "value": true
+          "assertion_type": "comparison",
+          "assertion": "true"
         },
         "audio.websiteId": {
           "comparison_type": "user",
@@ -31,9 +26,8 @@
     {
       "attributes": {
         "main_user.isActive": {
-          "comparison_type": "boolean",
-          "comparison": "boolAnd",
-          "value": true
+          "assertion_type": "comparison",
+          "assertion": "true"
         },
         "audio.websiteId": {
           "comparison_type": "user",

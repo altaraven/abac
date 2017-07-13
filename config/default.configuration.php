@@ -11,7 +11,9 @@ return [
     ],
     'accessChecker' => [
         'class' => '\Abac\Verification\AccessChecker',
-        'test' => 'testing...',
+        'assertions' => [
+            'comparison' => '\Abac\Assertions\ComparisonAssertion',
+        ]
     ],
 
 //    'policiesPathAlias' => app_path('Services') . '/abac/config/policies/',
