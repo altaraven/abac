@@ -11,6 +11,7 @@ return [
     ],
     'accessChecker' => [
         'class' => '\Abac\Verification\AccessChecker',
+        'userRuleName' => 'user',
         'assertions' => [
             'comparison' => '\Abac\Assertions\ComparisonAssertion',
         ]

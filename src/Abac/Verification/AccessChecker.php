@@ -17,6 +17,8 @@ class AccessChecker implements AccessCheckerInterface
 
     protected $resource;
 
+    protected $userRuleName = 'user';
+
     protected $assertions;
 
     /**
@@ -87,6 +89,14 @@ class AccessChecker implements AccessCheckerInterface
     public function retrieveUserOrResourceValue($attributeAlias)
     {
         //TODO: implement
+        //"user.isActive"
+        if(0 === strpos($attributeAlias, $this->userRuleName . '.')) {
+            //evaluate User.*
+
+            return '';
+        }
+        //evaluate Object.*
+
         return '';
     }
 
