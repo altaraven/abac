@@ -19,6 +19,8 @@ class AccessChecker implements AccessCheckerInterface
 
     protected $userRuleName = 'user';
 
+    protected $fieldDelimiter = '.';
+
     protected $assertions;
 
     /**
@@ -90,7 +92,7 @@ class AccessChecker implements AccessCheckerInterface
     {
         //TODO: implement
         //"user.isActive"
-        if(0 === strpos($attributeAlias, $this->userRuleName . '.')) {
+        if(0 === strpos($attributeAlias, $this->userRuleName . $this->fieldDelimiter)) {
             //evaluate User.*
 
             return '';
@@ -98,6 +100,15 @@ class AccessChecker implements AccessCheckerInterface
         //evaluate Object.*
 
         return '';
+    }
+
+    /**
+     * @param object $object
+     * @param string $fieldName
+     */
+    public function retrieveValue($object, $fieldName)
+    {
+
     }
 
     /**
