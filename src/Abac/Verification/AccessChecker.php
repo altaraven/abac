@@ -4,6 +4,8 @@ namespace Abac\Verification;
 
 use Abac\Base\AccessCheckerInterface;
 use Abac\Base\ConfigurableTrait;
+use Abac\Exceptions\AttributeVerificationException;
+use Abac\Exceptions\ForbiddenException;
 use Abac\Exceptions\InvalidConfigurationException;
 
 /**
@@ -27,18 +29,24 @@ class AccessChecker implements AccessCheckerInterface
 
     protected $getterPrefix = 'get';
 
+    protected $exceptions = [];
+
     /**
      * {@inheritdoc}
      */
     public function check($ruleItems)
     {
+        $errors = [];
         foreach ($ruleItems as $item) {
-            if (true === $this->verifyRuleItem($item)) {
+            $result = $this->verifyRuleItem($item);
+            if (true === $result) {
                 return true;
+            } else {
+                $errors[] = $result;
             }
         }
 
-        return false;
+        throw new ForbiddenException(json_encode($errors));
     }
 
     /**
@@ -48,7 +56,7 @@ class AccessChecker implements AccessCheckerInterface
     {
         try {
             $this->check($ruleItems);
-        } catch (\Exception $e) {
+        } catch (ForbiddenException $e) {
             return $e->getMessage();
         }
 
@@ -58,27 +66,34 @@ class AccessChecker implements AccessCheckerInterface
     /**
      * @param array $item
      *
-     * @return bool
+     * @return bool|array
      */
     protected function verifyRuleItem($item)
     {
         $count = count($item);
         $okCount = 0;
+        $errors = [];
 
         foreach ($item as $attribute => $assertion) {
-            $okCount += (int) $this->verifyAttribute($attribute, $assertion);
+            try {
+                $okCount += (int)$this->verifyAttribute($attribute, $assertion);
+            } catch (AttributeVerificationException $e) {
+                $errors[] = $e->getMessage();
+            }
         }
 
         if ($okCount === $count) {
             return true;
         }
 
-        return false;
+//        return false;
+        return $errors;
     }
 
     /**
      * @param string $attributeAlias
      * @param array  $assertion
+     * @throws \Exception
      *
      * @return bool
      */
@@ -96,7 +111,11 @@ class AccessChecker implements AccessCheckerInterface
             $params[] = $assertion['value'];
         }
 
-        return call_user_func_array([$assertionClass, $assertionMethod], $params);
+        try {
+            return call_user_func_array([$assertionClass, $assertionMethod], $params);
+        } catch (\Exception $e) {
+            throw new AttributeVerificationException($e->getMessage());
+        }
     }
 
     /**
