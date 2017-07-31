@@ -39,17 +39,8 @@ $user = new \Tests\Abac\Data\User\User([
     'isActive' => true,
 ]);
 
-//$pattern = '/^(\w+\.)+/';
-//$replacement = '';
-$string = 'some.audio.create';
-//$string = 'audio.create';
 
-$matches = explode('.', $string);
-
-//echo preg_match_all($pattern, $string, $matches);
-dump($matches);
-
-
-//$abac->checkAccess('audio.create', $user, $audio);
+$res = $abac->checkAccessSafely('audio.create', $user, $audio);
+dump($res); die;
 
 //var_dump($audio->getTitle());

@@ -10,25 +10,25 @@ use Assert\Assertion;
 class ArrayAssertion
 {
     /**
-     * @param array $value
-     * @param int|float|string $expected
+     * @param mixed $value
+     * @param array $expected
      *
      * @return bool
      */
     public static function in($value, $expected)
     {
-        return Assertion::choice($expected, $value);
+        return Assertion::choice($value, $expected);
     }
 
     /**
-     * @param array $value
-     * @param int|float|string $expected
+     * @param mixed $value
+     * @param array $expected
      *
      * @return bool
      */
     public static function notIn($value, $expected)
     {
-        return Assertion::notInArray($expected, $value);
+        return Assertion::notInArray($value, $expected);
     }
 
     /**

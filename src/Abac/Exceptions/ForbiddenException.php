@@ -7,13 +7,23 @@ namespace Abac\Exceptions;
  */
 class ForbiddenException extends \InvalidArgumentException
 {
+    private $errors = [];
+
     /**
-     * @param string   $message
+     * @param array    $errors
      * @param int|null $code
-     * //TODO make it pass an array of errors here as 1st argument
      */
-    public function __construct($message, $code = 403)
+    public function __construct($errors, $code = 403)
     {
-        parent::__construct($message, $code);
+        $this->errors = $errors;
+        parent::__construct(json_encode($errors), $code);
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }

@@ -68,17 +68,35 @@ class Abac
      */
     public function checkAccess($ruleName, $user, $resource = null/*, $options = []*/)
     {
+        //TODO: attributesProvider IS NOT used at all!!!
         $ruleItems = $this->policiesProvider->one($ruleName);
 
         return $this->accessChecker
             ->setUser($user)
             ->setResource($resource)
-            ->check($ruleItems);
+            ->check($ruleName, $ruleItems);
+    }
+
+    /**
+     * @param string      $ruleName
+     * @param object      $user
+     * @param object|null $resource
+     *
+     * @return bool
+     */
+    public function checkAccessSafely($ruleName, $user, $resource = null)
+    {
+        $ruleItems = $this->policiesProvider->one($ruleName);
+
+        return $this->accessChecker
+            ->setUser($user)
+            ->setResource($resource)
+            ->checkSafely($ruleName, $ruleItems);
     }
 
     public function _test()
     {
-//        Assert::that('')->eq('')->integer();
+        //        Assert::that('')->eq('')->integer();
 //        Assertion::alnum( '');
 //
 //        Assert::lazy()

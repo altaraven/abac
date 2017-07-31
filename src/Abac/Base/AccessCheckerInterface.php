@@ -8,20 +8,22 @@ namespace Abac\Base;
 interface AccessCheckerInterface
 {
     /**
+     * @param string $ruleName
      * @param array $ruleItems
      *
      * @return bool
      */
-    public function check($ruleItems);
+    public function check($ruleName, $ruleItems);
 
     /**
      * Shortcut for check() method that will not throw exceptions
      *
+     * @param string $ruleName
      * @param array $ruleItems
      *
      * @return bool|string
      */
-    public function checkSafely($ruleItems);
+    public function checkSafely($ruleName, $ruleItems);
 
     /**
      * @param $user

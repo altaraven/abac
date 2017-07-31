@@ -34,30 +34,30 @@ class AccessChecker implements AccessCheckerInterface
     /**
      * {@inheritdoc}
      */
-    public function check($ruleItems)
+    public function check($ruleName, $ruleItems)
     {
-        $errors = [];
+        $errors[$ruleName] = [];
         foreach ($ruleItems as $item) {
             $result = $this->verifyRuleItem($item);
             if (true === $result) {
                 return true;
             } else {
-                $errors[] = $result;
+                $errors[$ruleName][] = $result;
             }
         }
 
-        throw new ForbiddenException(json_encode($errors));
+        throw new ForbiddenException($errors);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function checkSafely($ruleItems)
+    public function checkSafely($ruleName, $ruleItems)
     {
         try {
-            $this->check($ruleItems);
+            $this->check($ruleName, $ruleItems);
         } catch (ForbiddenException $e) {
-            return $e->getMessage();
+            return $e->getErrors();
         }
 
         return true;
@@ -76,9 +76,9 @@ class AccessChecker implements AccessCheckerInterface
 
         foreach ($item as $attribute => $assertion) {
             try {
-                $okCount += (int)$this->verifyAttribute($attribute, $assertion);
+                $okCount += (int) $this->verifyAttribute($attribute, $assertion);
             } catch (AttributeVerificationException $e) {
-                $errors[] = $e->getMessage();
+                $errors[] = $e->getError();
             }
         }
 
@@ -86,13 +86,13 @@ class AccessChecker implements AccessCheckerInterface
             return true;
         }
 
-//        return false;
         return $errors;
     }
 
     /**
      * @param string $attributeAlias
      * @param array  $assertion
+     *
      * @throws \Exception
      *
      * @return bool
@@ -114,7 +114,7 @@ class AccessChecker implements AccessCheckerInterface
         try {
             return call_user_func_array([$assertionClass, $assertionMethod], $params);
         } catch (\Exception $e) {
-            throw new AttributeVerificationException($e->getMessage());
+            throw new AttributeVerificationException($attributeAlias, $e->getMessage());
         }
     }
 
@@ -125,17 +125,29 @@ class AccessChecker implements AccessCheckerInterface
      */
     protected function retrieveUserOrResourceValue($attributeAlias)
     {
-        //user prefix with delimiter
-        $userRuleName = $this->userRuleName . $this->fieldDelimiter;
+        $callableArray = explode($this->fieldDelimiter, $attributeAlias);
 
-        if (0 === strpos($attributeAlias, $userRuleName)) {
-            //evaluate User.*
-            $targetObject = $this->user;
-        } else {
-            $targetObject = $this->resource;
+        if (count($callableArray) < 2) {
+            $message = \sprintf(
+                'Attribute alias "%s" is incorrect. Please use "object%sfield pattern."',
+                $attributeAlias,
+                $this->fieldDelimiter
+            );
+
+            throw new InvalidConfigurationException($message);
         }
 
-        return $this->retrieveValue($targetObject, str_replace($userRuleName, '', $attributeAlias));
+        if (array_shift($callableArray) === $this->userRuleName) {
+            $value = $this->user;
+        } else {
+            $value = $this->resource;
+        }
+
+        foreach ($callableArray as $field) {
+            $value = $this->retrieveValue($value, $field);
+        }
+
+        return $value;
     }
 
     /**
