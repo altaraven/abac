@@ -29,6 +29,29 @@ class Configuration extends \ArrayObject
     }
 
     /**
+     * Shortcut for parent method
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function get($key)
+    {
+        return parent::offsetGet($key);
+    }
+
+    /**
+     * Shortcut for parent method
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function set($key, $value)
+    {
+        parent::offsetSet($key, $value);
+    }
+
+    /**
      * @param array       $reference
      * @param null|string $className
      *
@@ -84,28 +107,5 @@ class Configuration extends \ArrayObject
         }
 
         return $res;
-    }
-
-    /**
-     * Shortcut for parent method
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get($key)
-    {
-        return parent::offsetGet($key);
-    }
-
-    /**
-     * Shortcut for parent method
-     *
-     * @param string $key
-     * @param string $value
-     */
-    public function set($key, $value)
-    {
-        parent::offsetSet($key, $value);
     }
 }

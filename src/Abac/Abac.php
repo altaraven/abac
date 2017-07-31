@@ -44,6 +44,22 @@ class Abac
     }
 
     /**
+     * @param array $config
+     *
+     * @return object
+     */
+    public static function create($config = []/*, $ignoreDefaultConfig = false*/)
+    {
+        $configuration = Configuration::init($config);
+
+        return new static(
+            $configuration->get(Configuration::POLICIES_PROVIDER),
+            $configuration->get(Configuration::ATTRIBUTES_PROVIDER),
+            $configuration->get(Configuration::ACCESS_CHECKER)
+        );
+    }
+
+    /**
      * @param string      $ruleName
      * @param object      $user
      * @param object|null $resource
@@ -74,22 +90,6 @@ class Abac
         $rules = $this->policiesProvider->one('audio.create');
         dump($rules);
         die;
-    }
-
-    /**
-     * @param array $config
-     *
-     * @return object
-     */
-    public static function create($config = []/*, $ignoreDefaultConfig = false*/)
-    {
-        $configuration = Configuration::init($config);
-
-        return new static(
-            $configuration->get(Configuration::POLICIES_PROVIDER),
-            $configuration->get(Configuration::ATTRIBUTES_PROVIDER),
-            $configuration->get(Configuration::ACCESS_CHECKER)
-        );
     }
 
     /**

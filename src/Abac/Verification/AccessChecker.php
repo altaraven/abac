@@ -23,6 +23,10 @@ class AccessChecker implements AccessCheckerInterface
 
     protected $assertions;
 
+    protected $useGetter = true;
+
+    protected $getterPrefix = 'get';
+
     /**
      * {@inheritdoc}
      */
@@ -38,11 +42,25 @@ class AccessChecker implements AccessCheckerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function checkSafely($ruleItems)
+    {
+        try {
+            $this->check($ruleItems);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return true;
+    }
+
+    /**
      * @param array $item
      *
      * @return bool
      */
-    public function verifyRuleItem($item)
+    protected function verifyRuleItem($item)
     {
         $count = count($item);
         $okCount = 0;
@@ -64,13 +82,11 @@ class AccessChecker implements AccessCheckerInterface
      *
      * @return bool
      */
-    public function verifyAttribute($attributeAlias, $assertion)
+    protected function verifyAttribute($attributeAlias, $assertion)
     {
         $assertionClass = $this->getAssertionClass($assertion['assertion_type']);
         $assertionMethod = $this->getAssertionMethod($assertionClass, $assertion['assertion']);
 
-        //TODO: receive attribute value from User
-        //TODO: receive attribute value from Resource
         $params = [
             $this->retrieveUserOrResourceValue($attributeAlias),
         ];
@@ -88,27 +104,36 @@ class AccessChecker implements AccessCheckerInterface
      *
      * @return mixed
      */
-    public function retrieveUserOrResourceValue($attributeAlias)
+    protected function retrieveUserOrResourceValue($attributeAlias)
     {
-        //TODO: implement
-        //"user.isActive"
-        if(0 === strpos($attributeAlias, $this->userRuleName . $this->fieldDelimiter)) {
+        //user prefix with delimiter
+        $userRuleName = $this->userRuleName . $this->fieldDelimiter;
+
+        if (0 === strpos($attributeAlias, $userRuleName)) {
             //evaluate User.*
-
-            return '';
+            $targetObject = $this->user;
+        } else {
+            $targetObject = $this->resource;
         }
-        //evaluate Object.*
 
-        return '';
+        return $this->retrieveValue($targetObject, str_replace($userRuleName, '', $attributeAlias));
     }
 
     /**
      * @param object $object
      * @param string $fieldName
+     *
+     * @return mixed
      */
-    public function retrieveValue($object, $fieldName)
+    protected function retrieveValue($object, $fieldName)
     {
+        if ($this->useGetter) {
+            $getter = $this->getterPrefix . ucfirst($fieldName);
 
+            return $object->$getter();
+        }
+
+        return $object->$fieldName;
     }
 
     /**
