@@ -15,7 +15,7 @@ class ComparisonAssertion
      *
      * @return bool
      */
-    public function equal($value, $expected)
+    public static function equal($value, $expected)
     {
         return Assertion::eq($value, $expected);
     }
@@ -26,7 +26,7 @@ class ComparisonAssertion
      *
      * @return bool
      */
-    public function notEqual($value, $expected)
+    public static function notEqual($value, $expected)
     {
         return Assertion::notEq($value, $expected);
     }
@@ -36,7 +36,7 @@ class ComparisonAssertion
      *
      * @return bool
      */
-    public function true($value)
+    public static function true($value)
     {
         return Assertion::true($value);
     }
@@ -46,7 +46,7 @@ class ComparisonAssertion
      *
      * @return bool
      */
-    public function false($value)
+    public static function false($value)
     {
         return Assertion::false($value);
     }
@@ -56,7 +56,7 @@ class ComparisonAssertion
      *
      * @return bool
      */
-    public function null($value)
+    public static function null($value)
     {
         return Assertion::null($value);
     }

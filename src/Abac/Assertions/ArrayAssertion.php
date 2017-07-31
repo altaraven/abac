@@ -15,7 +15,7 @@ class ArrayAssertion
      *
      * @return bool
      */
-    public function in($value, $expected)
+    public static function in($value, $expected)
     {
         return Assertion::choice($expected, $value);
     }
@@ -26,7 +26,7 @@ class ArrayAssertion
      *
      * @return bool
      */
-    public function notIn($value, $expected)
+    public static function notIn($value, $expected)
     {
         return Assertion::notInArray($expected, $value);
     }
@@ -37,7 +37,7 @@ class ArrayAssertion
      *
      * @return bool
      */
-    public function intersect($array1, $array2)
+    public static function intersect($array1, $array2)
     {
         return count(array_intersect($array1, $array2)) > 0;
     }
@@ -48,9 +48,9 @@ class ArrayAssertion
      *
      * @return bool
      */
-    public function doNotIntersect($array1, $array2)
+    public static function doNotIntersect($array1, $array2)
     {
-        return !$this->intersect($array1, $array2);
+        return !static::intersect($array1, $array2);
     }
 
 //    /**

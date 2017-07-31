@@ -14,6 +14,7 @@ return [
         'userRuleName' => 'user',
         'assertions' => [
             'comparison' => '\Abac\Assertions\ComparisonAssertion',
+            'array' => '\Abac\Assertions\ArrayAssertion',
         ]
     ],
 

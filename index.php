@@ -12,12 +12,12 @@ $abac = \Abac\Abac::create([
     'attributesProvider' => [
         'path' => __DIR__ . '/tests/Data/Json/Attributes/attributes.json',
     ],
-    'accessChecker' => [
-        'test' => 'testing...',
-    ],
+//    'accessChecker' => [
+//        'test' => 'testing...',
+//    ],
 ]);
 
-$abac->_test();
+//$abac->_test();
 
 $audio = new \Tests\Abac\Data\Object\Audio([
     'title' => 'Cold as Perfection',
@@ -38,5 +38,18 @@ $user = new \Tests\Abac\Data\User\User([
     'isRoot' => false,
     'isActive' => true,
 ]);
+
+//$pattern = '/^(\w+\.)+/';
+//$replacement = '';
+$string = 'some.audio.create';
+//$string = 'audio.create';
+
+$matches = explode('.', $string);
+
+//echo preg_match_all($pattern, $string, $matches);
+dump($matches);
+
+
+//$abac->checkAccess('audio.create', $user, $audio);
 
 //var_dump($audio->getTitle());
