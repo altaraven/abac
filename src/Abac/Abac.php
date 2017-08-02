@@ -6,6 +6,8 @@ use Abac\Base\AccessCheckerInterface;
 use Abac\Base\AttributesProviderInterface;
 use Abac\Base\PoliciesProviderInterface;
 use Abac\Configuration\Configuration;
+use Abac\Exceptions\ForbiddenException;
+use Abac\Exceptions\InvalidArgumentException;
 use Assert\Assert;
 use Assert\Assertion;
 
@@ -68,6 +70,13 @@ class Abac
      */
     public function checkAccess($ruleName, $user, $resource = null/*, $options = []*/)
     {
+        if (!is_string($ruleName)) {
+            throw new InvalidArgumentException('Rule name must be a string.');
+        }
+        if (!is_object($user)) {
+            throw new InvalidArgumentException('User must be an object.');
+        }
+
         //TODO: attributesProvider IS NOT used at all!!!
         $ruleItems = $this->policiesProvider->one($ruleName);
 
@@ -86,12 +95,13 @@ class Abac
      */
     public function checkAccessSafely($ruleName, $user, $resource = null)
     {
-        $ruleItems = $this->policiesProvider->one($ruleName);
+        try {
+            $this->checkAccess($ruleName, $user, $resource);
+        } catch (ForbiddenException $e) {
+            return $e->getErrors();
+        }
 
-        return $this->accessChecker
-            ->setUser($user)
-            ->setResource($resource)
-            ->checkSafely($ruleName, $ruleItems);
+        return true;
     }
 
     public function _test()

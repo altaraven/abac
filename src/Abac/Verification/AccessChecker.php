@@ -50,20 +50,6 @@ class AccessChecker implements AccessCheckerInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function checkSafely($ruleName, $ruleItems)
-    {
-        try {
-            $this->check($ruleName, $ruleItems);
-        } catch (ForbiddenException $e) {
-            return $e->getErrors();
-        }
-
-        return true;
-    }
-
-    /**
      * @param array $item
      *
      * @return bool|array
@@ -205,7 +191,7 @@ class AccessChecker implements AccessCheckerInterface
     {
         if (!method_exists($className, $name)) {
             $message = \sprintf(
-                'Assertion class "%s" does not have method "%s" .',
+                'Assertion class "%s" does not have method "%s".',
                 $className,
                 $name
             );

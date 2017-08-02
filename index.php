@@ -19,7 +19,7 @@ $abac = \Abac\Abac::create([
 
 //$abac->_test();
 
-$audio = new \Tests\Abac\Data\Object\Audio([
+$audio = new \Tests\Abac\Data\Resource\Audio([
     'title' => 'Cold as Perfection',
     'artist' => 'Fleshgod Apocalypse',
     'length' => 199,
@@ -40,7 +40,8 @@ $user = new \Tests\Abac\Data\User\User([
 ]);
 
 
-$res = $abac->checkAccessSafely('audio.create', $user, $audio);
+//$res = $abac->checkAccessSafely('audio.create1', $user, $audio);
+$res = $abac->checkAccessSafely('audio.create', $user, null);
 dump($res); die;
 
 //var_dump($audio->getTitle());

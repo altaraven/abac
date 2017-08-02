@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Abac\Data\Object;
+namespace Tests\Abac\Data\Resource;
 
 use Abac\Base\ConfigurableTrait;
 
