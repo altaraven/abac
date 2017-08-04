@@ -30,7 +30,7 @@ class JsonDirectoryPoliciesProvider implements PoliciesProviderInterface
         $all = $this->all();
 
         if (empty($all[$name])) {
-            $message = \sprintf(
+            $message = sprintf(
                 'No rule items found with the name "%s".',
                 $name
             );

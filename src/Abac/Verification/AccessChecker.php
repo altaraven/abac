@@ -4,6 +4,7 @@ namespace Abac\Verification;
 
 use Abac\Base\AccessCheckerInterface;
 use Abac\Base\ConfigurableTrait;
+use Abac\Exceptions\AttributeReadException;
 use Abac\Exceptions\AttributeVerificationException;
 use Abac\Exceptions\ForbiddenException;
 use Abac\Exceptions\InvalidConfigurationException;
@@ -65,6 +66,8 @@ class AccessChecker implements AccessCheckerInterface
                 $okCount += (int) $this->verifyAttribute($attribute, $assertion);
             } catch (AttributeVerificationException $e) {
                 $errors[] = $e->getError();
+            } catch (AttributeReadException $e) {
+                $errors[] = $e->getMessage();
             }
         }
 
@@ -114,7 +117,7 @@ class AccessChecker implements AccessCheckerInterface
         $callableArray = explode($this->fieldDelimiter, $attributeAlias);
 
         if (count($callableArray) < 2) {
-            $message = \sprintf(
+            $message = sprintf(
                 'Attribute alias "%s" is incorrect. Please use "object%sfield pattern."',
                 $attributeAlias,
                 $this->fieldDelimiter
@@ -144,6 +147,15 @@ class AccessChecker implements AccessCheckerInterface
      */
     protected function retrieveValue($object, $fieldName)
     {
+        if(!is_object($object)) {
+            $message = sprintf(
+                'Can\'t read attribute "%s" from "<NULL>" object.',
+                $fieldName
+            );
+
+            throw new AttributeReadException($message);
+        }
+
         if ($this->useGetter) {
             $getter = $this->getterPrefix . ucfirst($fieldName);
 
@@ -161,7 +173,7 @@ class AccessChecker implements AccessCheckerInterface
     protected function getAssertionClass($name)
     {
         if (!isset($this->assertions[$name])) {
-            $message = \sprintf(
+            $message = sprintf(
                 'Assertion type "%s" is not assigned to any assertion php class.',
                 $name
             );
@@ -170,7 +182,7 @@ class AccessChecker implements AccessCheckerInterface
         }
 
         if (!class_exists($this->assertions[$name])) {
-            $message = \sprintf(
+            $message = sprintf(
                 'Assertion class "%s" does not exist.',
                 $this->assertions[$name]
             );
@@ -190,7 +202,7 @@ class AccessChecker implements AccessCheckerInterface
     protected function getAssertionMethod($className, $name)
     {
         if (!method_exists($className, $name)) {
-            $message = \sprintf(
+            $message = sprintf(
                 'Assertion class "%s" does not have method "%s".',
                 $className,
                 $name

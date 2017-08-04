@@ -5,16 +5,6 @@
         "assertion_type": "comparison",
         "assertion": "true"
       },
-      "user.isRoot": {
-        "assertion_type": "comparison",
-        "assertion": "true"
-      }
-    },
-    {
-      "user.isActive": {
-        "assertion_type": "comparison",
-        "assertion": "true"
-      },
       "audio.genre": {
         "assertion_type": "array",
         "assertion": "in",
@@ -22,6 +12,16 @@
           "Rock",
           "Metal"
         ]
+      }
+    },
+    {
+      "user.isActive": {
+        "assertion_type": "comparison",
+        "assertion": "true"
+      },
+      "user.isRoot": {
+        "assertion_type": "comparison",
+        "assertion": "true"
       }
     }
   ]
