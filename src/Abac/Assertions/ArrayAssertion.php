@@ -2,6 +2,7 @@
 
 namespace Abac\Assertions;
 
+use Abac\Exceptions\InvalidArgumentException;
 use Assert\Assertion;
 
 /**
@@ -10,6 +11,8 @@ use Assert\Assertion;
 class ArrayAssertion
 {
     /**
+     * Check that value is in array of choices.
+     *
      * @param mixed $value
      * @param array $expected
      *
@@ -17,10 +20,12 @@ class ArrayAssertion
      */
     public static function in($value, $expected)
     {
-        return Assertion::choice($value, $expected);
+        return Assertion::inArray($value, $expected);
     }
 
     /**
+     * Check that value is not in array of choices.
+     *
      * @param mixed $value
      * @param array $expected
      *
@@ -32,6 +37,8 @@ class ArrayAssertion
     }
 
     /**
+     * Check that array1 has intersection with array2.
+     *
      * @param array $array1
      * @param array $array2
      *
@@ -39,10 +46,20 @@ class ArrayAssertion
      */
     public static function intersect($array1, $array2)
     {
-        return count(array_intersect($array1, $array2)) > 0;
+        if (count(array_intersect($array1, $array2)) === 0) {
+            $message = sprintf('Array "%s" has no intersection with "%s".',
+                json_encode($array1),
+                json_encode($array2)
+            );
+            throw new InvalidArgumentException($message);
+        }
+
+        return true;
     }
 
     /**
+     * Check that array1 has no intersection with array2.
+     *
      * @param array $array1
      * @param array $array2
      *
@@ -50,38 +67,14 @@ class ArrayAssertion
      */
     public static function doNotIntersect($array1, $array2)
     {
-        return !static::intersect($array1, $array2);
-    }
+        if (count(array_intersect($array1, $array2)) > 0) {
+            $message = sprintf('Array "%s" has intersection with "%s".',
+                json_encode($array1),
+                json_encode($array2)
+            );
+            throw new InvalidArgumentException($message);
+        }
 
-//    /**
-//     * @param mixed $value
-//     * @param mixed $expected
-//     *
-//     * @return bool
-//     */
-//    public function equal($value, $expected)
-//    {
-//        return ;
-//    }
-//
-//    /**
-//     * @param mixed $value
-//     * @param mixed $expected
-//     *
-//     * @return bool
-//     */
-//    public function notEqual($value, $expected)
-//    {
-//        return ;
-//    }
-//
-//    /**
-//     * @param mixed $value
-//     *
-//     * @return bool
-//     */
-//    public function empty($value)
-//    {
-//        return ;
-//    }
+        return true;
+    }
 }
